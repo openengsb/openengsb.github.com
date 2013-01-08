@@ -1,4 +1,4 @@
-openengsb.github.com
-====================
+New OpenEngSB Homepage Location
+================================
 
-Homepage for the OpenEngSB
+New Place for the OpenEngSB Homepage.
