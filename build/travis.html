@@ -6,30 +6,34 @@
 
         $(document).ready(function () {
             $.ajax({
-                url: baseUrl + "openengsb"
+                url: baseUrl + "openengsb",
+                context: $('#oeb')
             }).done(renderTravisCallback);
         });
 
         $(document).ready(function () {
             $.ajax({
-                url: baseUrl + "openengsb-labs"
+                url: baseUrl + "openengsb-labs",
+                context: $('#labs')
             }).done(renderTravisCallback);
         });
 
         $(document).ready(function () {
             $.ajax({
-                url: baseUrl + "openengsb-domcon"
+                url: baseUrl + "openengsb-domcon",
+                context: $('#domcon')
             }).done(renderTravisCallback);
         });
 
         renderTravisCallback = function (x) {
+            var self = $(this);
             var y = $.parseJSON(x) == null ? x : $.parseJSON(x);
             if (y.length == 0) {
                 return;
             }
-            $("#oeb").append(renderHead());
+            self.append(renderHead());
             $.each(y, function (index, value) {
-                        $('#oeb').append(renderProject(value));
+                        self.append(renderProject(value));
                         console.log(value);
                     }
             );
