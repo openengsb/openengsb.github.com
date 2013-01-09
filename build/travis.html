@@ -2,53 +2,38 @@
 <head>
     <script src="../lib/jquery.min.js" type="text/javascript"></script>
     <script>
+        var baseUrl = "https://api.travis-ci.org/repos?owner_name=";
+
         $(document).ready(function () {
             $.ajax({
-                url: "https://api.travis-ci.org/repos?owner_name=openengsb"
-            }).done(function (x) {
-                        if (x.length == 0) {
-                            return;
-                        }
-                        $("#oeb").append(renderHead());
-                        $.each(x, function (index, value) {
-                                    $('#oeb').append(renderProject(value));
-                                    console.log(value);
-                                }
-                        );
-                    });
+                url: baseUrl + "openengsb"
+            }).done(renderTravisCallback);
         });
 
         $(document).ready(function () {
             $.ajax({
-                url: "https://api.travis-ci.org/repos?owner_name=openengsb-labs"
-            }).done(function (x) {
-                        if (x.length == 0) {
-                            return;
-                        }
-                        $("#labs").append(renderHead());
-                        $.each(x, function (index, value) {
-                                    $('#labs').append(renderProject(value));
-                                    console.log(value);
-                                }
-                        );
-                    });
+                url: baseUrl + "openengsb-labs"
+            }).done(renderTravisCallback);
         });
 
         $(document).ready(function () {
             $.ajax({
-                url: "https://api.travis-ci.org/repos?owner_name=openengsb-domcon"
-            }).done(function (x) {
-                        if (x.length == 0) {
-                            return;
-                        }
-                        $("#domcon").append(renderHead());
-                        $.each(x, function (index, value) {
-                                    $('#domcon').append(renderProject(value));
-                                    console.log(value);
-                                }
-                        );
-                    });
+                url: baseUrl + "openengsb-domcon"
+            }).done(renderTravisCallback);
         });
+
+        renderTravisCallback = function (x) {
+            var y = $.parseJSON(x) == null ? x : $.parseJSON(x);
+            if (y.length == 0) {
+                return;
+            }
+            $("#oeb").append(renderHead());
+            $.each(y, function (index, value) {
+                        $('#oeb').append(renderProject(value));
+                        console.log(value);
+                    }
+            );
+        }
 
         renderProject = function (project) {
             var style = project.last_build_status == 0 ? "green" : "red";
